@@ -6,14 +6,18 @@ import java.util.List;
 
 public class CircularLinkedList<T> {
     private int size;
-    private Node<T> lastDeleted;
-    private Node<T> head = null;
-    private Node<T> tail = null;
+    private Node<T> head;
+    private Node<T> tail;
 
     public CircularLinkedList() {
         head = null;
         tail = null;
-        lastDeleted = null;
+        size = 0;
+    }
+
+    public void reset() {
+        head = null;
+        tail = null;
         size = 0;
     }
 
@@ -33,14 +37,47 @@ public class CircularLinkedList<T> {
         size++;
     }
 
+    public Node<T> elementAt(int indexPosition){
+        if(indexPosition > size){
+            return null;
+        }
+
+        Node temp = head;
+        int i = 1;
+        while(i++ != indexPosition){
+            temp = temp.getNext();
+        }
+
+        return temp;
+    }
+
     public void deleteAt(int indexPosition) {
         if(size == 0) {
            throw new ChildrenGameException("No element can be deleted in empty list");
         }
-        if(indexPosition == 1 && size == 1) {
+
+        if(size == 1) {
            head = null;
            tail = null;
            size = 0;
+           return;
+        }
+
+        // Removes first element
+        if(indexPosition == 1 && size > 1) {
+            head = head.getNext();
+            tail.setNext(head);
+            size--;
+            return;
+        }
+
+        // Removes last element
+        if(indexPosition == size) {
+           // Find the previous node in circular linked list
+           Node<T> foundNode = elementAt(indexPosition-1);
+           // Set the next pointer to head
+           foundNode.setNext(head);
+           size--;
            return;
         }
     }
@@ -57,24 +94,22 @@ public class CircularLinkedList<T> {
         return size;
     }
 
-    public List<Object> toList() {
-        List<Object> nodeList = new ArrayList<>();
+    public List<T> toList() {
+        List<T> nodeList = new ArrayList<>();
 
         if(size == 0) {
            return Collections.emptyList();
         } else {
             Node<T> node = head;
-            nodeList.add(node);
+            nodeList.add((T) node);
             node = node.getNext();
 
             while(node != null && node != head) {
-                nodeList.add(node);
+                nodeList.add((T) node);
                 node = node.getNext();
             }
 
             return nodeList;
         }
     }
-
-
 }
