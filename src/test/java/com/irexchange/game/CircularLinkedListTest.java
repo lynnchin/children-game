@@ -1,5 +1,7 @@
 package com.irexchange.game;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,16 +15,26 @@ import static org.junit.Assert.assertThat;
 
 public class CircularLinkedListTest {
 
+    private CircularLinkedList<Integer> linkedList;
+
+    @Before
+    public void setUp() {
+        linkedList = new CircularLinkedList<>();
+    }
+
+    @After
+    public void tearDown(){
+        linkedList.reset();
+    }
+
     @Test(expected = ChildrenGameException.class)
     public void testAppend_WhenNodeIsNull(){
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
         linkedList.append(null);
     }
 
     @Test
     public void testAppend_WhenListIsEmpty(){
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(new Integer("1"));
+        appendOneElementToList();
 
         assertThat(linkedList.getHead().getData(), is(equalTo(new Integer("1"))));
         assertThat(linkedList.getTail().getData(), is(equalTo(new Integer("1"))));
@@ -30,15 +42,13 @@ public class CircularLinkedListTest {
 
     @Test
     public void testGetSize_ReturnsNonZeroValue_WhenAppendNewNode() {
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(new Integer("1"));
+        appendOneElementToList();
 
         assertThat(linkedList.getSize(), is(equalTo(1)));
     }
 
     @Test
     public void testAppend_WhenListIsNonEmpty() {
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
         Integer firstItem = new Integer("1");
         linkedList.append(firstItem);
         Integer secondItem = new Integer("2");
@@ -53,13 +63,11 @@ public class CircularLinkedListTest {
 
     @Test
     public void testToList_WhenListIsEmpty() {
-        CircularLinkedList<Object> linkedList = new CircularLinkedList<>();
         assertThat(linkedList.toList().size(), is(equalTo(0)));
     }
 
     @Test
     public void testToList_WhenListIsNonEmpty() {
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
         Integer firstItem = new Integer("1");
         linkedList.append(firstItem);
         Integer secondItem = new Integer("2");
@@ -70,14 +78,12 @@ public class CircularLinkedListTest {
 
     @Test(expected = ChildrenGameException.class)
     public void testDeleteAtPosition_WhenListIsEmpty() {
-        CircularLinkedList<Object> linkedList = new CircularLinkedList<>();
         linkedList.deleteAt(1);
     }
 
     @Test
     public void testDeleteAtFirstPosition_WhenListContainsOneElement() {
-        CircularLinkedList<Object> linkedList = new CircularLinkedList<>();
-        linkedList.append(new Integer("1"));
+        appendOneElementToList();
         linkedList.deleteAt(1);
 
         assertThat(linkedList.getSize(), is(equalTo(0)));
@@ -86,14 +92,7 @@ public class CircularLinkedListTest {
 
     @Test
     public void testDeleteAtFirstPosition_WhenListContainsMoreThanOneElement() {
-        Integer firstElement = new Integer("1");
-        Integer secondElement = new Integer("2");
-        Integer thirdElement = new Integer("3");
-
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(firstElement);
-        linkedList.append(secondElement);
-        linkedList.append(thirdElement);
+        appendMoreThanTwoElementsToList();
         linkedList.deleteAt(1);
 
         List<Integer> actualList = linkedList.toList();
@@ -104,14 +103,7 @@ public class CircularLinkedListTest {
 
     @Test
     public void testElementAtPositionIndex_WhenIndexIsGreaterThanListSize() {
-        Integer firstElement = new Integer("1");
-        Integer secondElement = new Integer("2");
-        Integer thirdElement = new Integer("3");
-
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(firstElement);
-        linkedList.append(secondElement);
-        linkedList.append(thirdElement);
+        appendMoreThanTwoElementsToList();
 
         Node<Integer> result = linkedList.elementAt(4);
 
@@ -120,14 +112,8 @@ public class CircularLinkedListTest {
 
     @Test
     public void testElementAtPositionIndex_WhenIndexIsWithinListSize() {
-        Integer firstElement = new Integer("1");
+        appendMoreThanTwoElementsToList();
         Integer secondElement = new Integer("2");
-        Integer thirdElement = new Integer("3");
-
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(firstElement);
-        linkedList.append(secondElement);
-        linkedList.append(thirdElement);
 
         Node<Integer> result = linkedList.elementAt(2);
 
@@ -136,17 +122,25 @@ public class CircularLinkedListTest {
 
     @Test
     public void testDeleteAtLastPosition_WhenListContainsMoreThanOneElement() {
-        Integer firstElement = new Integer("1");
-        Integer secondElement = new Integer("2");
-        Integer thirdElement = new Integer("3");
+        appendMoreThanTwoElementsToList();
 
-        CircularLinkedList<Integer> linkedList = new CircularLinkedList<>();
-        linkedList.append(firstElement);
-        linkedList.append(secondElement);
-        linkedList.append(thirdElement);
         linkedList.deleteAt(3);
 
         List<Integer> actualList = linkedList.toList();
         assertThat(actualList.toString(),equalTo(Arrays.asList(1,2).toString()));
+    }
+
+    private void appendOneElementToList() {
+        linkedList.append(new Integer("1"));
+    }
+
+    private void appendMoreThanTwoElementsToList() {
+        Integer firstElement = new Integer("1");
+        Integer secondElement = new Integer("2");
+        Integer thirdElement = new Integer("3");
+
+        linkedList.append(firstElement);
+        linkedList.append(secondElement);
+        linkedList.append(thirdElement);
     }
 }
