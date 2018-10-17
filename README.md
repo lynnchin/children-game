@@ -26,6 +26,28 @@ Write a method on a new class, which, when given n and k, returns the
 sequence of children as they go out, and the id of the winning child. Create any
 additional classes, tests, etc, you need to support the design of your solution.
  
-Please document design decisions you have made i.e. general approach, where and why you have sacrificed performance for maintainability or visa versa etc.
-----------------------------------------------------------------------------------
+## Decisions Made/Approach
+
+* My general idea was starting with using a Tree as my primary data structure to store the data;
+* However, after some thoughts I decided to come up to use single Linked List since I find that Linked List is straight-forward and easy to implement;
+* I did not use any Mocking API like Mockito for this coding exercise since it is not required;
+* Tests cases are included as part of the solution;
+
+## Performance
+
+* The search performance should be O(1) if the list only contains one element;
+* The search performance should be O(n) if the list contains n-th element;
+* Overall performance should be O(n) since the algorithm only iterate through the list once, record between previous and next node, and perform a swap
+between head and tail of the linked list.
+
 Please feel free to reach out to us if you have any questions or concerns.
+
+## Improvements
+
+* Write any interface to interact between inputs due to time constraint;
+* Create bundle the code in JAR file due to time constraint;
+* Write a better instructions on how to run the code due to time constraint;
+
+## HOWTO run
+
+To execute the solution, simply go to the Main glass and run program in any IDE.
