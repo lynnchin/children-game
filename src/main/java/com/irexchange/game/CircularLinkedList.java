@@ -82,7 +82,6 @@ public class CircularLinkedList<T> {
            return;
         }
 
-        //TODO:
         // Remove element at position index in between head and tail
         // Again, this will need to loop through the list and find the element
         // This solution will not be optimised by performance due to time constraint...
@@ -90,7 +89,7 @@ public class CircularLinkedList<T> {
         indexPosition = indexPosition - 1;
         Node<T> pointer = null;
 
-        for (int i = 1; i < size - 1; i++)
+        for (int i = 1;; i++)
         {
             if (i == indexPosition)
             {

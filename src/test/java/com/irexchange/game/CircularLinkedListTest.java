@@ -141,6 +141,20 @@ public class CircularLinkedListTest {
     }
 
     @Test
+    public void testDeleteAt_WhenListContainsTwoElements() {
+        Integer firstElement = new Integer("1");
+        Integer secondElement = new Integer("2");
+
+        linkedList.append(firstElement);
+        linkedList.append(secondElement);
+
+        linkedList.deleteAt(3);
+
+        List<Integer> actualList = linkedList.toList();
+        assertThat(actualList.toString(),equalTo(Arrays.asList(2).toString()));
+    }
+
+    @Test
     public void testDeleteAtMiddlePosition_WhenListContainsMoreThanOneElement() {
         Integer firstElement = new Integer("1");
         Integer secondElement = new Integer("2");
