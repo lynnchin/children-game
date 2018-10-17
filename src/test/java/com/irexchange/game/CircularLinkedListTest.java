@@ -41,6 +41,16 @@ public class CircularLinkedListTest {
     }
 
     @Test
+    public void testAppend_AndListIsCircular() {
+        appendMoreThanTwoElementsToList();
+
+        Node<Integer> head = linkedList.getHead();
+        Node<Integer> tail = linkedList.getTail();
+
+        assertThat(tail.getNext(), is(equalTo(head)));
+    }
+
+    @Test
     public void testGetSize_ReturnsNonZeroValue_WhenAppendNewNode() {
         appendOneElementToList();
 
