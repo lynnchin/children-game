@@ -130,6 +130,28 @@ public class CircularLinkedListTest {
         assertThat(actualList.toString(),equalTo(Arrays.asList(1,2).toString()));
     }
 
+    @Test
+    public void testDeleteAtMiddlePosition_WhenListContainsMoreThanOneElement() {
+        Integer firstElement = new Integer("1");
+        Integer secondElement = new Integer("2");
+        Integer thirdElement = new Integer("3");
+        Integer fourthElement = new Integer("4");
+        Integer fifthElement = new Integer("5");
+
+        linkedList.append(firstElement);
+        linkedList.append(secondElement);
+        linkedList.append(thirdElement);
+        linkedList.append(fourthElement);
+        linkedList.append(fifthElement);
+
+        linkedList.deleteAt(3);
+
+        List<Integer> actualList = linkedList.toList();
+
+        System.out.println(actualList.toString());
+        assertThat(actualList.toString(),equalTo(Arrays.asList(4,5,1,2).toString()));
+    }
+
     private void appendOneElementToList() {
         linkedList.append(new Integer("1"));
     }

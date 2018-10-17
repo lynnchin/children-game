@@ -33,6 +33,7 @@ public class CircularLinkedList<T> {
         } else {
             tail.setNext(newNode);
             tail = newNode;
+            newNode.setNext(head);
         }
         size++;
     }
@@ -80,6 +81,35 @@ public class CircularLinkedList<T> {
            size--;
            return;
         }
+
+        //TODO:
+        // Remove element at position index in between head and tail
+        // Again, this will need to loop through the list and find the element
+        // This solution will not be optimised by performance due to time constraint...
+        Node<T> current = head;
+        indexPosition = indexPosition - 1;
+        Node<T> pointer = null;
+
+        for (int i = 1; i < size - 1; i++)
+        {
+            if (i == indexPosition)
+            {
+                pointer = current.getNext();
+                pointer = pointer.getNext();
+                current.setNext(pointer);
+                break;
+            }
+
+            current = current.getNext();
+        }
+
+        // Swap between the head and tail with the latest changes
+        if(pointer != null) {
+            head = pointer;
+            tail = current;
+        }
+
+        size--;
     }
 
     public Node<T> getHead() {
